@@ -26,7 +26,7 @@ public class amusementFragment extends Fragment {
     private List<NewItem> newItems=new ArrayList<NewItem>();
     private  RecyclerView recyclerView_amusement;
     private  NewsAdapter adapter;
-
+    private  static int flag3 = 0;
     public amusementFragment() {
         // Required empty public constructor
     }
@@ -42,7 +42,11 @@ public class amusementFragment extends Fragment {
         recyclerView_amusement.setLayoutManager(layoutManager);
         adapter=new NewsAdapter(newItems);
         recyclerView_amusement.setAdapter(adapter);
-       // GetNews();
+        if(flag3 == 0){
+            GetNews();
+            flag3 = 1;
+        }
+
         Log.d("amus3", "onCreateView:3 ");
 
         return view;
@@ -80,26 +84,17 @@ public class amusementFragment extends Fragment {
         try{
             Log.d("hello","hello");
             JSONObject jsonObject=new JSONObject(jsonData);
-
             Log.d("testtest",jsonObject.toString());
+
             final JSONArray array=jsonObject.getJSONArray("BA10TA81wangning");
-            for(int i=1;i<array.length();i++)
+            for(int i=0;i<array.length();i++)
             {
                 NewItem one=new NewItem();
                 JSONObject object=array.getJSONObject(i);
-
                 one.setPictureAddress(object.getString("imgsrc"));
                 one.setTitle(object.getString("title"));
                 one.setContentAddress(object.getString("url"));
-                Log.d("contentadress",one.getContentAddress());
-                if(one.getContentAddress().toCharArray()[0]=='0')//对无用的内容地址object进筛选
-                {
-                    Log.d("goodnull","truetrue!+");
-                    continue;
 
-                }
-                Log.d("title12",one.getTitle());
-                Log.d("pic12",one.getPictureAddress());
                 boolean check=false;
                 for(NewItem c:newItems){
                     if(c.getTitle().equals(one.getTitle())){
@@ -110,7 +105,7 @@ public class amusementFragment extends Fragment {
                 newItems.add(one);
             }
 
-            Log.d("listsize3","1234"+" "+newItems.size());
+
            getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -121,6 +116,7 @@ public class amusementFragment extends Fragment {
             });
         }catch (Exception e)
         {
+            Log.d("listsize3","1234333"+e.toString());
             e.printStackTrace();
 
         }

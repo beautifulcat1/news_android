@@ -24,7 +24,7 @@ public class tvFragment extends Fragment {
     private List<NewItem> newItems=new ArrayList<NewItem>();
     private  RecyclerView recyclerView_tv;
     private  NewsAdapter adapter;
-    private static int flag1=0;
+    private static int flag4=0;
 
     public tvFragment() {
         // Required empty public constructor
@@ -41,8 +41,10 @@ public class tvFragment extends Fragment {
         recyclerView_tv.setLayoutManager(layoutManager);
         adapter=new NewsAdapter(newItems);
         recyclerView_tv.setAdapter(adapter);
-        Log.d("tv4", "onCreateView:4 ");
-            //GetNews();
+        if(flag4 == 0){
+            GetNews();
+            flag4 = 1;
+        }
 
         return view;
     }
@@ -80,7 +82,7 @@ public void GetNews(){
 
             Log.d("testtest",jsonObject.toString());
             final JSONArray array=jsonObject.getJSONArray("BD2A86BEwangning");
-            for(int i=1;i<array.length();i++)
+            for(int i=0;i<array.length();i++)
             {
                 NewItem one=new NewItem();
                 JSONObject object=array.getJSONObject(i);
@@ -89,14 +91,6 @@ public void GetNews(){
                 one.setTitle(object.getString("title"));
                 one.setContentAddress(object.getString("url"));
                 Log.d("contentadress",one.getContentAddress());
-                if(one.getContentAddress().toCharArray()[0]=='0')//对无用的内容地址object进筛选
-                {
-                    Log.d("goodnull","truetrue!+");
-                    continue;
-
-                }
-                Log.d("title12",one.getTitle());
-                Log.d("pic12",one.getPictureAddress());
                 boolean check=false;
                 for(NewItem c:newItems){
                     if(c.getTitle().equals(one.getTitle())){
@@ -106,8 +100,6 @@ public void GetNews(){
                 if(!check)
                 newItems.add(one);
             }
-
-            Log.d("listsize","1234"+" "+newItems.size());
            getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

@@ -38,8 +38,7 @@ public class financeFragment extends Fragment {
         recyclerView_finance.setLayoutManager(layoutManager);
         adapter = new NewsAdapter(newItems);
         recyclerView_finance.setAdapter(adapter);
-        if(flag1 == 0)
-        {
+        if (flag1 == 0) {
             GetNews();
             flag1 = 1;
         }
@@ -62,11 +61,10 @@ public class financeFragment extends Fragment {
                 Log.d("成功！", "12121212");
                 String text = response.body().string();
                 Log.d("response1", text);
-                char test[] = text.toCharArray();
+                char test[] = text.toCharArray();//由于api的json数据不是标准格式要去掉前边的artist
                 for (int i = 0; i < 9; i++)
                     test[i] = ' ';
                 test[test.length - 1] = ' ';
-                Log.d("text1", String.valueOf(test));
                 text = String.valueOf(test);
                 parseJSONWithJSONObject(text);
             }
@@ -77,21 +75,19 @@ public class financeFragment extends Fragment {
         try {
             JSONObject jsonObject = new JSONObject(jsonData);
             final JSONArray array = jsonObject.getJSONArray("BA8EE5GMwangning");
-            for (int i = 1; i < array.length(); i++) {
+            for (int i = 0; i < array.length(); i++) {
                 NewItem one = new NewItem();
                 JSONObject object = array.getJSONObject(i);
                 one.setPictureAddress(object.getString("imgsrc"));
+                Log.d("address", "parseJSONWithJSONObject: " + one.getPictureAddress());
                 one.setTitle(object.getString("title"));
+                Log.d("title", "parseJSONWithJSONObject: " + one.getTitle());
                 one.setContentAddress(object.getString("url"));
                 Log.d("contentadress", one.getContentAddress());
-                if (one.getContentAddress().toCharArray()[0] == '0')//对无用的内容地址object进筛选
-                {
-                    Log.d("goodnull", "truetrue!+");
-                    continue;
 
-                }
                 boolean check = false;
                 for (NewItem c : newItems) {
+                    Log.d("for_test", "parseJSONWithJSONObject: " + c.getTitle());
                     if (c.getTitle().equals(one.getTitle())) {
                         check = true;
                         break;
@@ -100,6 +96,7 @@ public class financeFragment extends Fragment {
                 if (!check)
                     newItems.add(one);
             }
+
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

@@ -24,6 +24,7 @@ public class headlineFragment extends Fragment {
     private List<NewItem> newItems=new ArrayList<NewItem>();
     private  RecyclerView recyclerView_sports;
     private  NewsAdapter adapter;
+    private static int flag5 = 0;
 
     public headlineFragment() {
         // Required empty public constructor
@@ -40,7 +41,10 @@ public class headlineFragment extends Fragment {
         recyclerView_sports.setLayoutManager(layoutManager);
         adapter=new NewsAdapter(newItems);
         recyclerView_sports.setAdapter(adapter);
-        //GetNews();
+        if (flag5 == 0){
+            GetNews();
+            flag5 = 1;
+        }
         Log.d("head5", "onCreateView:5 ");
         return view;
     }
@@ -50,7 +54,7 @@ public void GetNews() {
     if (!MainActivity.progressDialog.isShowing()) {
         MainActivity.progressDialog.show();
     }
-    HttpUtil.sendOkhttpRequest("http://c.3g.163.com/nc/article/list/T1467284926140/0-20.html", new Callback() {
+    HttpUtil.sendOkhttpRequest("https://3g.163.com/touch/reconstruct/article/list/BAI67OGGwangning/0-20.html", new Callback() {
         @Override
         public void onFailure(Call call, IOException e) {
             Log.d("error11", "获取错误！！！");
@@ -61,11 +65,10 @@ public void GetNews() {
             Log.d("成功！", "12121212");
             String text = response.body().string();
             Log.d("response1", text);
-            char test[] = text.toCharArray();
+            char test[] = text.toCharArray();//由于api的json数据不是标准格式要去掉前边的artist
             for (int i = 0; i < 9; i++)
                 test[i] = ' ';
             test[test.length - 1] = ' ';
-            Log.d("text1", String.valueOf(test));
             text = String.valueOf(test);
             parseJSONWithJSONObject(text);
         }
@@ -75,19 +78,14 @@ public void GetNews() {
     private void parseJSONWithJSONObject(String jsonData) {
         try {
             JSONObject jsonObject = new JSONObject(jsonData);
-            final JSONArray array = jsonObject.getJSONArray("T1467284926140");
-            for (int i = 1; i < array.length(); i++) {
+            final JSONArray array = jsonObject.getJSONArray("BAI67OGGwangning");
+            Log.d("trump", "parseJSONWithJSONObject: "+array.length());
+            for (int i = 0; i < array.length(); i++) {
                 NewItem one = new NewItem();
                 JSONObject object = array.getJSONObject(i);
                 one.setPictureAddress(object.getString("imgsrc"));
                 one.setTitle(object.getString("title"));
                 one.setContentAddress(object.getString("url"));
-                if (one.getContentAddress().toCharArray()[0] == '0')//对无用的内容地址object进筛选
-                {
-                    Log.d("goodnull", "truetrue!+");
-                    continue;
-
-                }
                 boolean check = false;
                 for (NewItem c : newItems) {
                     if (c.getTitle().equals(one.getTitle())) {
@@ -108,6 +106,7 @@ public void GetNews() {
             });
         } catch (Exception e) {
             e.printStackTrace();
+
 
         }
     }
