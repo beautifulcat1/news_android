@@ -110,7 +110,7 @@ public class amusementFragment extends Fragment {
                 newItems.add(one);
             }
 
-            Log.d("listsize","1234"+" "+newItems.size());
+            Log.d("listsize3","1234"+" "+newItems.size());
            getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

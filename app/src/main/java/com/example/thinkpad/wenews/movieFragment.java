@@ -24,7 +24,7 @@ public class movieFragment extends Fragment {
     private List<NewItem> newItems=new ArrayList<NewItem>();
     private  RecyclerView recyclerView_army;
     private  NewsAdapter adapter;
-
+    private  static int flag1 = 0;
     public movieFragment() {
         // Required empty public constructor
     }
@@ -32,16 +32,21 @@ public class movieFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.layout_army, container, false);
         recyclerView_army=(RecyclerView) view.findViewById(R.id.recyclerview_army) ;
         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
         recyclerView_army.setLayoutManager(layoutManager);
         adapter=new NewsAdapter(newItems);
         recyclerView_army.setAdapter(adapter);
-        //GetNews();
-        Log.d("movie2", "onCreateView:2 ");
+        Log.d("movie2", "onCreateView:2 "+flag1);
+
+        if (flag1 == 0)
+        {
+            GetNews();
+            flag1 = 1;
+        }
+        Log.d("movie2", "onCreateView:2 "+flag1);
         return view;
     }
 
@@ -58,7 +63,6 @@ public void GetNews(){
         public void onResponse(Call call, Response response) throws IOException {
             Log.d("成功！","12121212");
             String text=response.body().string();
-            Log.d("response",text);
             char test[]=text.toCharArray();
             for(int i=0;i<9;i++)
                 test[i]=' ';
@@ -99,7 +103,8 @@ public void GetNews(){
                     if(c.getTitle().equals(one.getTitle())){
                         check=true;
                     break;
-                }}
+                }
+                }
                 if(!check)
                 newItems.add(one);
             }
@@ -108,10 +113,9 @@ public void GetNews(){
            getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    adapter.notifyDataSetChanged();
-                   if(MainActivity.progressDialog.isShowing())
-                       MainActivity.progressDialog.dismiss();
-
+                    if(MainActivity.progressDialog.isShowing())
+                        MainActivity.progressDialog.dismiss();
+                        adapter.notifyDataSetChanged();
                 }
             });
         }catch (Exception e)

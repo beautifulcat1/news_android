@@ -24,6 +24,7 @@ public class financeFragment extends Fragment {
     private List<NewItem> newItems = new ArrayList<NewItem>();
     private RecyclerView recyclerView_finance;
     private NewsAdapter adapter;
+    private static int flag1 = 0;
 
     public financeFragment() {
         // Required empty public constructor
@@ -37,7 +38,11 @@ public class financeFragment extends Fragment {
         recyclerView_finance.setLayoutManager(layoutManager);
         adapter = new NewsAdapter(newItems);
         recyclerView_finance.setAdapter(adapter);
-        //GetNews();
+        if(flag1 == 0)
+        {
+            GetNews();
+            flag1 = 1;
+        }
         Log.d("fina1", "onCreateView:1 ");
         return view;
     }
@@ -56,12 +61,12 @@ public class financeFragment extends Fragment {
             public void onResponse(Call call, Response response) throws IOException {
                 Log.d("成功！", "12121212");
                 String text = response.body().string();
-                Log.d("response", text);
+                Log.d("response1", text);
                 char test[] = text.toCharArray();
                 for (int i = 0; i < 9; i++)
                     test[i] = ' ';
                 test[test.length - 1] = ' ';
-                Log.d("text", String.valueOf(test));
+                Log.d("text1", String.valueOf(test));
                 text = String.valueOf(test);
                 parseJSONWithJSONObject(text);
             }
@@ -70,15 +75,11 @@ public class financeFragment extends Fragment {
 
     private void parseJSONWithJSONObject(String jsonData) {
         try {
-            Log.d("hello", "hello");
             JSONObject jsonObject = new JSONObject(jsonData);
-
-            Log.d("testtest", jsonObject.toString());
             final JSONArray array = jsonObject.getJSONArray("BA8EE5GMwangning");
             for (int i = 1; i < array.length(); i++) {
                 NewItem one = new NewItem();
                 JSONObject object = array.getJSONObject(i);
-
                 one.setPictureAddress(object.getString("imgsrc"));
                 one.setTitle(object.getString("title"));
                 one.setContentAddress(object.getString("url"));
@@ -89,8 +90,6 @@ public class financeFragment extends Fragment {
                     continue;
 
                 }
-                Log.d("title12", one.getTitle());
-                Log.d("pic12", one.getPictureAddress());
                 boolean check = false;
                 for (NewItem c : newItems) {
                     if (c.getTitle().equals(one.getTitle())) {
@@ -101,8 +100,6 @@ public class financeFragment extends Fragment {
                 if (!check)
                     newItems.add(one);
             }
-
-            Log.d("listsize", "1234" + " " + newItems.size());
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

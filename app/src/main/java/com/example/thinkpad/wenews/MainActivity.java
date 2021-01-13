@@ -39,14 +39,13 @@ public class MainActivity extends AppCompatActivity {
         final movieFragment fragment2 = new movieFragment();
         final amusementFragment fragment3 = new amusementFragment();
         final tvFragment fragment4 = new tvFragment();
-        final headlineFragment fragment5 = new headlineFragment();
-        final newsFragment fragment6 = new newsFragment();
+       // final headlineFragment fragment5 = new headlineFragment();
+        final newsFragment fragment5 = new newsFragment();
         viewList.add(fragment1);
         viewList.add(fragment2);
         viewList.add(fragment3);
         viewList.add(fragment4);
         viewList.add(fragment5);
-        viewList.add(fragment6);
         FragmentManager fragmentManager = getSupportFragmentManager();
         channelPager pagerAdapter = new channelPager(fragmentManager, viewList, this);
         viewPager.setAdapter(pagerAdapter);
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         tag.add((TextView) findViewById(R.id.movie));
         tag.add((TextView) findViewById(R.id.amusement));
         tag.add((TextView) findViewById(R.id.tv));
-        tag.add((TextView) findViewById(R.id.headline));
         tag.add((TextView) findViewById(R.id.newsLive));
 
         pullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
@@ -75,9 +73,6 @@ public class MainActivity extends AppCompatActivity {
                         fragment4.GetNews();
                         break;
                     case 4:
-                        fragment5.GetNews();
-                        break;
-                    case 5:
                         break;
                 }
                 pullToRefreshView.setRefreshing(false);
