@@ -2,6 +2,7 @@ package com.example.thinkpad.wenews;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.percent.PercentFrameLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +28,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         ImageView NewsImage;
         TextView NewsTitle;
         TextView Source;
+        PercentFrameLayout percentFrameLayout;
 
         public ViewHolder(View view) {
             super(view);
             NewsImage = (ImageView) view.findViewById(R.id.image);
             NewsTitle = (TextView) view.findViewById(R.id.title);
             Source = (TextView) view.findViewById(R.id.source);
+            percentFrameLayout = (PercentFrameLayout) view.findViewById(R.id.percetframent);
         }
     }
 
@@ -47,7 +50,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         }
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.new_item, parent, false);
         final ViewHolder holder = new ViewHolder(view);
-        holder.NewsImage.setOnClickListener(new View.OnClickListener() {
+        holder.percentFrameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();

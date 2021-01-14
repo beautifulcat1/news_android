@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/percetframent"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     xmlns:solid="http://schemas.android.com/tools"
@@ -45,7 +46,6 @@
                 android:layout_height="match_parent"/>
             <TextView
                 android:id="@+id/source"
-                android:text="和讯网"
                 android:gravity="bottom|left"
                 android:textColor="#75333333"
                 android:textSize="14dp"
