@@ -86,6 +86,7 @@ public void GetNews() {
                 one.setPictureAddress(object.getString("imgsrc"));
                 one.setTitle(object.getString("title"));
                 one.setContentAddress(object.getString("url"));
+                one.setSource(object.getString("source"));
                 boolean check = false;
                 for (NewItem c : newItems) {
                     if (c.getTitle().equals(one.getTitle())) {

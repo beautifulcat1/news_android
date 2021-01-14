@@ -90,6 +90,7 @@ public void GetNews(){
                 one.setPictureAddress(object.getString("imgsrc"));
                 one.setTitle(object.getString("title"));
                 one.setContentAddress(object.getString("url"));
+                one.setSource(object.getString("source"));
                 Log.d("contentadress",one.getContentAddress());
                 boolean check=false;
                 for(NewItem c:newItems){

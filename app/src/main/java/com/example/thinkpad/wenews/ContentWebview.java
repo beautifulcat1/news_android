@@ -22,13 +22,13 @@ import org.jsoup.select.Elements;
 import static com.example.thinkpad.wenews.MainActivity.progressDialog;
 
 public class ContentWebview extends AppCompatActivity {
-    private TextView text_title,text_info,text_content;
-    String title=new String();
-    String author=new String();
-    String time=new String() ;
-    String imgAdress=new String();
-    ProgressDialog progressDialog ;
-    StringBuffer buffer=new StringBuffer();
+//    private TextView text_title,text_info,text_content;
+//    String title=new String();
+//    String author=new String();
+//    String time=new String() ;
+//    String imgAdress=new String();
+//    ProgressDialog progressDialog ;
+//    StringBuffer buffer=new StringBuffer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,61 +58,61 @@ public class ContentWebview extends AppCompatActivity {
             }
         });
     }
-    public void crawler( final String href ){
-        //   String text=null;
-        new Thread() {
-            @Override
-            public void run() {
-
-                super.run();
-                try {
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressDialog.show();
-                        }
-                    });
-
-                    Document doc = Jsoup.connect(href).get();
-                    Log.d("12345",doc.html());
-                    Log.d("kh1",""+href);
-
-
-                    Element head=doc.select("p").first();
-                    Log.d("head",""+head.text());
-                    title=head.select("h1.title").first().text();
-                    author =head.select("span.author").first().text();
-                    time =head.select("span.time.js-time").first().text();
-                    imgAdress=doc.getElementsByTag("a[href]").first().attr("href");
-                    Log.d("bhk123",title);
-                    Log.d("img",imgAdress);
-                    Element content=doc.select("div.content.fontsmall").first();
-                    Log.d("bhk456",content.text());
-                    Elements paragraphs=content.select("p");
-                    buffer.append("\n");
-                    for(Element para:paragraphs){
-                        buffer.append("     "+para.text()+"\n\n");
-                        Log.d("p_p",para.text());
-                    }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            text_title.setText("    "+title);
-                            text_info.setText("  来源："+author+" 时间："+time);
-                            text_content.setText(buffer);
-                            progressDialog.dismiss();
-                        }
-                    });
-
-
-                }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-
-
-    }
+//    public void crawler( final String href ){
+//        //   String text=null;
+//        new Thread() {
+//            @Override
+//            public void run() {
+//
+//                super.run();
+//                try {
+//
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            progressDialog.show();
+//                        }
+//                    });
+//
+//                    Document doc = Jsoup.connect(href).get();
+//                    Log.d("12345",doc.html());
+//                    Log.d("kh1",""+href);
+//
+//
+//                    Element head=doc.select("p").first();
+//                    Log.d("head",""+head.text());
+//                    title=head.select("h1.title").first().text();
+//                    author =head.select("span.author").first().text();
+//                    time =head.select("span.time.js-time").first().text();
+//                    imgAdress=doc.getElementsByTag("a[href]").first().attr("href");
+//                    Log.d("bhk123",title);
+//                    Log.d("img",imgAdress);
+//                    Element content=doc.select("div.content.fontsmall").first();
+//                    Log.d("bhk456",content.text());
+//                    Elements paragraphs=content.select("p");
+//                    buffer.append("\n");
+//                    for(Element para:paragraphs){
+//                        buffer.append("     "+para.text()+"\n\n");
+//                        Log.d("p_p",para.text());
+//                    }
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            text_title.setText("    "+title);
+//                            text_info.setText("  来源："+author+" 时间："+time);
+//                            text_content.setText(buffer);
+//                            progressDialog.dismiss();
+//                        }
+//                    });
+//
+//
+//                }
+//                catch(Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.start();
+//
+//
+//    }
 }

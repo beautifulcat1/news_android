@@ -2,6 +2,7 @@ package com.example.thinkpad.wenews;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -84,6 +85,8 @@ public class financeFragment extends Fragment {
                 Log.d("title", "parseJSONWithJSONObject: " + one.getTitle());
                 one.setContentAddress(object.getString("url"));
                 Log.d("contentadress", one.getContentAddress());
+                one.setSource(object.getString("source"));
+                Log.d("source", "parseJSONWithJSONObject: "+one.getSource());
 
                 boolean check = false;
                 for (NewItem c : newItems) {

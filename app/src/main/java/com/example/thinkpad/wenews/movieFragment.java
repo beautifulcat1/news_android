@@ -89,6 +89,7 @@ public void GetNews(){
                 one.setPictureAddress(object.getString("imgsrc"));
                 one.setTitle(object.getString("title"));
                 one.setContentAddress(object.getString("url"));
+                one.setSource(object.getString("source"));
                 Log.d("contentadress",one.getContentAddress());
                 if(one.getContentAddress().toCharArray()[0]=='0')//对无用的内容地址object进筛选
                 {

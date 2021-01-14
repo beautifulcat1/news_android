@@ -8,6 +8,7 @@ public class NewItem {
     private String title;
     private String pictureAddress;
     private String contentAddress;
+    private String source;
 
     public String getContentAddress() {
         return contentAddress;
@@ -32,4 +33,8 @@ public class NewItem {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public void setSource(String source){ this.source = source; }
+
+    public String getSource(){ return source; }
 }
