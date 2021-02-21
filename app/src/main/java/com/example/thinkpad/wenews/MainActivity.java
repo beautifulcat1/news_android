@@ -6,8 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import com.yalantis.phoenix.PullToRefreshView;
@@ -30,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage("正在加载内容...");
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -39,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         final movieFragment fragment2 = new movieFragment();
         final amusementFragment fragment3 = new amusementFragment();
         final tvFragment fragment4 = new tvFragment();
-       final headlineFragment fragment5 = new headlineFragment();
+        final SportFragment fragment5 = new SportFragment();
         final newsFragment fragment6 = new newsFragment();
         viewList.add(fragment1);
         viewList.add(fragment2);

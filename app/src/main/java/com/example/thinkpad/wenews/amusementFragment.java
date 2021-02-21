@@ -58,7 +58,7 @@ public class amusementFragment extends Fragment {
     if(!MainActivity.progressDialog.isShowing()){
         MainActivity.progressDialog.show();
     }
-    HttpUtil.sendOkhttpRequest("https://3g.163.com/touch/reconstruct/article/list/BA10TA81wangning/0-20.html", new Callback() {
+    HttpUtil.sendOkhttpRequest("https://3g.163.com/touch/reconstruct/article/list/BD2AC4LMwangning/0-20.html", new Callback() {
         @Override
         public void onFailure(Call call, IOException e) {
             Log.d("error11","获取错误！！！");
@@ -86,7 +86,7 @@ public class amusementFragment extends Fragment {
             JSONObject jsonObject=new JSONObject(jsonData);
             Log.d("testtest",jsonObject.toString());
 
-            final JSONArray array=jsonObject.getJSONArray("BA10TA81wangning");
+            final JSONArray array=jsonObject.getJSONArray("BD2AC4LMwangning");
             for(int i=0;i<array.length();i++)
             {
                 NewItem one=new NewItem();

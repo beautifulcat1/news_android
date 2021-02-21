@@ -19,9 +19,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
+
 import static com.example.thinkpad.wenews.MainActivity.progressDialog;
 
 public class ContentWebview extends AppCompatActivity {
+      public static Elements element;
 //    private TextView text_title,text_info,text_content;
 //    String title=new String();
 //    String author=new String();
@@ -34,7 +37,7 @@ public class ContentWebview extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content_webview);
         Intent intent=getIntent();
-        String address=intent.getStringExtra("address");
+        final String address=intent.getStringExtra("address");
 
         WebView webView=(WebView) findViewById(R.id.web_view);
         WebSettings settings = webView.getSettings();
@@ -42,11 +45,38 @@ public class ContentWebview extends AppCompatActivity {
         //支持缩放
 
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl(address);
-       /* text_title=(TextView)findViewById(R.id.title);
-        text_info=(TextView)findViewById(R.id.author_time);
-        text_content=(TextView)findViewById(R.id.content);
-       crawler(address);*/
+//        webView.loadUrl(address);
+          String summary1 = "<!DOCTYPE html>\n" +
+                  "<html lang=\"zh-CN\">\n" +
+                  "  <head>\n" +
+                  "    <meta charset=\"utf-8\">\n" +
+                  "  </head>\n" +
+                  "  <body>";
+        String summary2 = "  </body>\n" +
+                "</html>";
+//线程内更新变量但主要变量不会变出错
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try
+                {
+                    Document document = Jsoup.connect(address).get();
+                    element = document.getElementsByClass("article-content");
+
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }//原文出自【易百教程】，商业转载请联系作者获得授权，非商业请保留原文链接：https://www.yiibai.com/jsoup/jsoup-quick-start.html
+
+            }
+        }){}.start();
+        try {
+            Thread.sleep(1000);//主线程等一下 更新线程将数据更新完毕
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        webView.loadData(summary1+element.toString()+summary2, "text/html", "utf-8");
         ActionBar actionBar=getSupportActionBar();
         if(actionBar!=null)
             actionBar.hide();
@@ -58,61 +88,4 @@ public class ContentWebview extends AppCompatActivity {
             }
         });
     }
-//    public void crawler( final String href ){
-//        //   String text=null;
-//        new Thread() {
-//            @Override
-//            public void run() {
-//
-//                super.run();
-//                try {
-//
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            progressDialog.show();
-//                        }
-//                    });
-//
-//                    Document doc = Jsoup.connect(href).get();
-//                    Log.d("12345",doc.html());
-//                    Log.d("kh1",""+href);
-//
-//
-//                    Element head=doc.select("p").first();
-//                    Log.d("head",""+head.text());
-//                    title=head.select("h1.title").first().text();
-//                    author =head.select("span.author").first().text();
-//                    time =head.select("span.time.js-time").first().text();
-//                    imgAdress=doc.getElementsByTag("a[href]").first().attr("href");
-//                    Log.d("bhk123",title);
-//                    Log.d("img",imgAdress);
-//                    Element content=doc.select("div.content.fontsmall").first();
-//                    Log.d("bhk456",content.text());
-//                    Elements paragraphs=content.select("p");
-//                    buffer.append("\n");
-//                    for(Element para:paragraphs){
-//                        buffer.append("     "+para.text()+"\n\n");
-//                        Log.d("p_p",para.text());
-//                    }
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            text_title.setText("    "+title);
-//                            text_info.setText("  来源："+author+" 时间："+time);
-//                            text_content.setText(buffer);
-//                            progressDialog.dismiss();
-//                        }
-//                    });
-//
-//
-//                }
-//                catch(Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//        }.start();
-//
-//
-//    }
 }

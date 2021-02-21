@@ -84,7 +84,7 @@ public class financeFragment extends Fragment {
                 one.setTitle(object.getString("title"));
                 Log.d("title", "parseJSONWithJSONObject: " + one.getTitle());
                 one.setContentAddress(object.getString("url"));
-                Log.d("contentadress", one.getContentAddress());
+                Log.d("finececontentadress", one.getContentAddress());
                 one.setSource(object.getString("source"));
                 Log.d("source", "parseJSONWithJSONObject: "+one.getSource());
 

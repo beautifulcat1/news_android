@@ -20,13 +20,13 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class headlineFragment extends Fragment {
+public class SportFragment extends Fragment {
     private List<NewItem> newItems=new ArrayList<NewItem>();
     private  RecyclerView recyclerView_sports;
     private  NewsAdapter adapter;
     private static int flag5 = 0;
 
-    public headlineFragment() {
+    public SportFragment() {
         // Required empty public constructor
     }
 
@@ -54,7 +54,7 @@ public void GetNews() {
     if (!MainActivity.progressDialog.isShowing()) {
         MainActivity.progressDialog.show();
     }
-    HttpUtil.sendOkhttpRequest("https://3g.163.com/touch/reconstruct/article/list/BAI67OGGwangning/0-20.html", new Callback() {
+    HttpUtil.sendOkhttpRequest("https://3g.163.com/touch/reconstruct/article/list/BA8E6OEOwangning/0-20.html", new Callback() {
         @Override
         public void onFailure(Call call, IOException e) {
             Log.d("error11", "获取错误！！！");
@@ -78,7 +78,7 @@ public void GetNews() {
     private void parseJSONWithJSONObject(String jsonData) {
         try {
             JSONObject jsonObject = new JSONObject(jsonData);
-            final JSONArray array = jsonObject.getJSONArray("BAI67OGGwangning");
+            final JSONArray array = jsonObject.getJSONArray("BA8E6OEOwangning");
             Log.d("trump", "parseJSONWithJSONObject: "+array.length());
             for (int i = 0; i < array.length(); i++) {
                 NewItem one = new NewItem();
@@ -87,6 +87,7 @@ public void GetNews() {
                 one.setTitle(object.getString("title"));
                 one.setContentAddress(object.getString("url"));
                 one.setSource(object.getString("source"));
+                Log.d("one.getsource", "parseJSONWithJSONObject: "+one.getContentAddress());
                 boolean check = false;
                 for (NewItem c : newItems) {
                     if (c.getTitle().equals(one.getTitle())) {

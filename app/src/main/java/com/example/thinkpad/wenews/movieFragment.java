@@ -53,7 +53,7 @@ public class movieFragment extends Fragment {
 public void GetNews(){
     if(!MainActivity.progressDialog.isShowing())
         MainActivity.progressDialog.show();
-    HttpUtil.sendOkhttpRequest("https://3g.163.com/touch/reconstruct/article/list/BD2A9LEIwangning/0-20.html", new Callback() {
+    HttpUtil.sendOkhttpRequest("https://3g.163.com/touch/reconstruct/article/list/BD2AB5L9wangning/0-20.html", new Callback() {
         @Override
         public void onFailure(Call call, IOException e) {
             Log.d("error11","获取错误！！！");
@@ -80,7 +80,7 @@ public void GetNews(){
             JSONObject jsonObject=new JSONObject(jsonData);
 
             Log.d("testtest",jsonObject.toString());
-            final JSONArray array=jsonObject.getJSONArray("BD2A9LEIwangning");
+            final JSONArray array=jsonObject.getJSONArray("BD2AB5L9wangning");
             for(int i=1;i<array.length();i++)
             {
                 NewItem one=new NewItem();
